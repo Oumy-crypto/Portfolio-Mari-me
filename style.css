@@ -3,6 +3,19 @@
 /* Lato pour le texte (côté moderne/épuré) */
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap');
 
+/* Bloque le défilement horizontal de la page entière */
+html, body {
+    overflow-x: hidden;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+/* S'assure que les marges internes (padding) ne font pas déborder les boîtes */
+*, *:before, *:after {
+    box-sizing: border-box;
+}
+
 /* 1. On remonte le bloc des boutons (les filtres) */
 .filtres {
     margin-top: -20px !important; /* Ajuste cette valeur si tu veux monter encore plus */
@@ -662,68 +675,81 @@ html {
 }
 
 
-/* Responsive (sur téléphone, on passe à 1 seule colonne) */
-@media (max-width: 768px) {
-    .grille-galerie {
-        grid-template-columns: 1fr;
-    }
-}
-
-/* Style par défaut des boutons (transparent) */
-/* --- Style Mobile (Par défaut) --- */
-/* --- Style Mobile (Par défaut) --- */
-/* --- Style Mobile (Par défaut) --- */
-.filtres {
-    display: flex;
-    flex-wrap: wrap;         /* Permet aux boutons de passer à la ligne */
-    justify-content: center; /* Centre parfaitement tous les boutons */
-    gap: 10px;               /* Espace entre les boutons */
-    padding: 10px 0;         /* Espace interne réduit pour ne pas encombrer */
-    margin: -15px auto 20px auto;/* Centre le bloc global et donne un peu d'espace avec le bas */
-    max-width: 900px;        /* Force les boutons à se regrouper sur 2 lignes max */
-}
-
-/* --- Style Ordinateur --- */
-
-    .filtres {
-        display: grid;
-        grid-template-columns: repeat(6, auto);
-        justify-content: center;
-        gap: 15px;
-        overflow: visible;
-        
-        /* MODIFICATION ICI : On aligne avec les réglages mobiles */
-        padding: 5px 0 15px 0;
-        margin-top: -15px; 
-    }
-
-
+/* --- 1. STYLE DES BOUTONS (Commun) --- */
 .btn-filtre {
+    padding: 10px 20px;
+    border-radius: 50px;
     background-color: transparent;
-    border: 1px solid #4A3B32;
-    color: #CBA171;
-    padding: 10px 25px;
-    border-radius: 50px; /* Bordures arrondies */
+    border: 1px solid #C5A88B;    /* Ta couleur marron/beige */
+    color: #C5A88B;
     cursor: pointer;
     text-transform: uppercase;
     font-size: 0.85rem;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    flex: 0 0 auto; 
-    white-space: initial;
-
-}
-
-.btn-filtre:hover, .btn-filtre.active {
-    background-color: #CBA171;
-    color:white;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-}
-
-.filtres {
-    /* On garde le remontage (si la valeur est trop forte, augmente le chiffre vers 0) */
-    margin-top: -15px !important; 
     
-    /* C'est ICI qu'on crée l'espace pour ne pas coller les photos */
-    margin-bottom: 30px !important; 
+    /* MODIFICATION CLÉ : On permet au texte long de passer à la ligne DANS le bouton */
+    white-space: normal !important; 
+    text-align: center;
+    line-height: 1.2;
+    min-height: 45px; /* S'assure que les boutons courts font la même hauteur */
+    
+    /* Optionnel : si le bouton le plus long est encore trop large, on le limite */
+    max-width: 250px;
+}
+
+/* Style du bouton actif (marron plein) */
+.btn-filtre.active {
+    background-color: #C5A88B;
+    color: #FFFFFF;
+}
+
+
+/* --- 2. VUE MOBILE (Par défaut) : 1 ligne horizontale avec scroll --- */
+.filtres {
+    display: flex !important;
+    flex-wrap: nowrap !important; /* Force une seule ligne continue */
+    overflow-x: auto !important;  /* Active le défilement au doigt */
+    justify-content: flex-start !important; /* Aligne au début pour le scroll */
+    gap: 10px;
+    padding: 10px 20px 20px 20px;
+    margin-bottom: 20px;
+    
+    /* Options pour un scroll propre sur mobile */
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Cache la barre sur Firefox */
+}
+
+/* Cache la barre de défilement sur Chrome/Safari/Edge sur mobile */
+.filtres::-webkit-scrollbar {
+    display: none;
+}
+
+
+/* --- 3. VUE ORDINATEUR (Écrans > 900px) : 2 lignes centrées STRICTES --- */
+/* --- VUE ORDINATEUR (Écrans > 900px) --- */
+@media (min-width: 900px) {
+    .filtres {
+        display: grid !important;
+        grid-template-columns: repeat(6, 1fr) !important; 
+        justify-content: center !important;
+        align-items: stretch; /* Permet aux boutons d'une même ligne d'avoir la même hauteur */
+        overflow-x: visible !important;
+        
+        /* --- AJUSTEMENT DES ESPACES --- */
+        gap: 10px 10px; /* 15px d'espace vertical (entre les lignes) et 20px horizontal (entre les colonnes) */
+        
+        /* On élargit un tout petit peu le conteneur pour éviter que le texte ne passe sur 3 lignes */
+        max-width: 1300px; 
+        
+        margin: 0 auto 70px auto !important; /* Marge du bas légèrement augmentée pour décoller le texte "SALONS & ESPACES DE VIE" */
+        padding: 5px 20px !important;
+    }
+}
+    
+    /* Si tu as un h2 ou p juste au-dessus des filtres, réduisons son espace */
+    .portfolio-header { margin-bottom: 5px !important; }
+
+
+html, body {
+    max-width: 100% !important;
+    overflow-x: hidden !important; /* Bloque définitivement le mouvement de gauche à droite du site */
 }
