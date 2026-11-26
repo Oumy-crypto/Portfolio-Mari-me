@@ -729,7 +729,7 @@ html {
 @media (min-width: 900px) {
     .filtres {
         display: grid !important;
-        grid-template-columns: repeat(6, 1fr) !important; 
+        grid-template-columns: repeat(5, 1fr) !important; 
         justify-content: center !important;
         align-items: stretch; /* Permet aux boutons d'une même ligne d'avoir la même hauteur */
         overflow-x: visible !important;
