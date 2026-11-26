@@ -81,17 +81,46 @@ p {
 
 header {
     background-color: #FDFBF7; /* Corrigé ici */
-    padding: 20px 50px;
+    padding: 12px 50px;
     position: sticky; 
     top: 0;
     z-index: 1000;
     border-bottom: 1px solid rgba(0,0,0,0.05);
     box-shadow: 0 2px 15px rgba(74, 59, 50, 0.08);
     display: flex;
-    justify-content: flex-end; /* Pousse le nav à droite */
+    justify-content: space-between; /* Logo à gauche, nav à droite */
     align-items: center; /* Centre verticalement les liens */
     width: 100%;
     box-sizing: border-box; /* Évite que le padding ne fasse déborder le header */
+}
+
+.logo-link {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    flex-shrink: 0;
+}
+
+.navbar-logo {
+    height: 60px;
+    width: 60px;
+    display: block;
+    object-fit: contain;
+    border-radius: 50%;
+    filter: drop-shadow(0 2px 6px rgba(74, 59, 50, 0.15));
+    transition: transform 0.3s ease;
+}
+
+.logo-link:hover .navbar-logo {
+    transform: scale(1.05);
+}
+
+.footer-logo {
+    width: 88px;
+    height: 88px;
+    object-fit: contain;
+    border-radius: 50%;
+    margin-bottom: 5px;
 }
 
 nav ul {
@@ -537,10 +566,35 @@ html {
     transition: all 0.3s ease;
 }
 
+/* Adaptation tablette pour le header avec logo */
+@media screen and (max-width: 1024px) and (min-width: 769px) {
+    header {
+        padding: 12px 28px;
+    }
+    .navbar-logo {
+        height: 52px;
+        width: 52px;
+    }
+    nav ul {
+        gap: 28px;
+    }
+    nav a {
+        font-size: 1rem;
+    }
+}
+
 /* Adaptation rapide pour petits écrans */
 @media screen and (max-width: 768px) {
     .navbar {
-        padding: 15px 25px;
+        padding: 10px 20px;
+    }
+    .navbar-logo {
+        height: 48px;
+        width: 48px;
+    }
+    .footer-logo {
+        width: 72px;
+        height: 72px;
     }
     .nav-links {
         display: none; /* On les cache sur mobile pour l'instant */
@@ -566,11 +620,12 @@ html {
     .nav-links {
         position: absolute;
         right: 0px;
-        top: 70px; /* À ajuster selon la hauteur de ta navbar */
+        top: 100%; /* Aligne le menu juste sous la navbar */
         background-color: #FDFBF7;
         display: flex;
         flex-direction: column;
         align-items: center;
+        gap: 24px;
         width: 100%;
         padding: 20px 0;
         /* Le menu est caché sur la droite par défaut */
